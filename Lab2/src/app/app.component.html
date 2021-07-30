@@ -1,0 +1,40 @@
+<div>
+  <div *ngIf="(data.series.length == 0)">
+<!--    <label for="N">N</label>-->
+<!--    <input id="N" type="number" [(ngModel)]="N"/><br>-->
+    <label for="a">Искать в интервали от </label>
+    <input id="a" type="number" [(ngModel)]="a"/>
+    <label for="b">до</label>
+    <input id="b" type="number" [(ngModel)]="b"/><br>
+    <label for="E">Точность</label>
+    <input id="E" type="number" [(ngModel)]="E"/><br>
+
+    <h2>Выбирите метод</h2><br>
+    <select [(ngModel)]="selectedMethod" (ngModelChange)="changeMethod($event)">
+      <option *ngFor="let method of methods" [ngValue]="method">{{method.name}}</option>
+    </select>
+
+    <button (click)="execute()">Решить</button><br>
+
+  </div>
+  <div *ngIf="!(data.series.length == 0)">
+    <button (click)="eraseChart()">Очистить</button><br>
+  </div>
+  <div *ngIf="!(data.series.length == 0)">
+    <x-chartist
+                [type]="type"
+                [data]="data"
+                [options]="options"
+                [events]="events"
+    ></x-chartist>
+  </div><br>
+  <div>
+    <table>
+      <tr *ngFor="let row of outTable">
+        <td *ngFor="let elem of row">
+          {{elem}}
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

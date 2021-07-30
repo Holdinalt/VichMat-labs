@@ -1,0 +1,65 @@
+<body>
+<textarea [ngModel]="Xs" (change)="XsChange($event.target.value)" style="width: 400px"></textarea><br>
+<textarea [ngModel]="Ys" (change)="YsChange($event.target.value)" style="width: 400px"></textarea><br>
+<button (click)="execute()">Exec</button>
+
+<div *ngIf="out.length != 0" >
+  <h3>Выбор аппроксимирующей функции</h3>
+  <table>
+    <tr>
+      <td>Вид фунции</td>
+      <td>a</td>
+      <td>b</td>
+      <td>c</td>
+      <td>S</td>
+      <td>Ср. кв. отклонение</td>
+    </tr>
+    <tr *ngFor="let part of Outs; let i = index">
+      <td>{{Functions[i]}}</td>
+      <td>{{Outs[i][5][0]}}</td>
+      <td>{{Outs[i][5][1]}}</td>
+      <td>{{cArray[i]}}</td>
+      <td>{{Outs[i][4][0]}}</td>
+      <td>{{ApproximationReliability[i]}}</td>
+    </tr>
+  </table>
+</div>
+<div *ngIf="showChard">
+  <x-chartist
+    [type]="type"
+    [data]="data"
+    [options]="options"
+    [events]="events"
+  ></x-chartist>
+</div>
+<div *ngIf="out.length != 0">
+  <h3>Выбрана: {{funcName}}</h3>
+  <h3>Функция: {{funcMain}}</h3>
+  <h3>{{additionalOption}}</h3>
+</div>
+
+<div *ngIf="out.length != 0">
+  <table>
+    <tr>
+      <td>#</td>
+      <td *ngFor="let dot of out; let i = index">{{i + 1}}</td>
+    </tr>
+    <tr>
+      <td>X</td>
+      <td *ngFor="let dot of out; let i = index">{{out[0][i]}}</td>
+    </tr>
+    <tr>
+      <td>Y</td>
+      <td *ngFor="let dot of out; let i = index">{{out[1][i]}}</td>
+    </tr>
+    <tr>
+      <td>{{funcMain}}</td>
+      <td *ngFor="let dot of out; let i = index">{{out[2][i]}}</td>
+    </tr>
+    <tr>
+      <td>Ei</td>
+      <td *ngFor="let dot of out; let i = index">{{out[3][i]}}</td>
+    </tr>
+  </table>
+</div>
+</body>

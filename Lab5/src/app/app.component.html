@@ -1,0 +1,71 @@
+<body>
+<div>
+
+  <label class="switch">
+    <input type="checkbox" [(ngModel)]="typeInput">
+    <span class="slider"></span>
+  </label><br>
+  Различные данные
+
+  <table *ngIf="typeInput">
+    <tr>
+      <td>
+        X
+      </td>
+      <td *ngFor="let xS of input[0], let i = index">
+        <input [(ngModel)]="input[0][i]">
+<!--        <input [(ngModel)]="xS">-->
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Y
+      </td>
+      <td *ngFor="let yS of input[1], let i = index">
+        <input [(ngModel)]="input[1][i]">
+      </td>
+    </tr>
+  </table>
+
+  <div *ngIf="!typeInput">
+    <label for="FuncSelect">Выбирите функцию</label><br>
+    <select size="3" id="FuncSelect" [(ngModel)]="funcInput">
+      <option selected [value]="0">sin(x)</option>
+      <option [value]="1">tan(x)</option>
+      <option [value]="2">x^2 + 2</option>
+    </select>
+  </div>
+
+
+  <label for="MethodSelect">Выбирите метод</label><br>
+  <select size="2" id="MethodSelect" [(ngModel)]="methodInput">
+    <option selected [value]="0">Лагранж</option>
+    <option [value]="1">Ньютон</option>
+  </select>
+
+  <div>
+    <label for="xInput">Введите значение аргумента для интерполирования</label><br>
+    <input id="xInput" [(ngModel)]="inputX" >
+  </div>
+  <div ></div>
+</div>
+
+
+
+<button (click)="execute()">Execute</button>
+
+
+<div *ngIf="showChard">
+  <x-chartist
+    [type]="type"
+    [data]="data"
+    [options]="options"
+    [events]="events"
+  ></x-chartist>
+</div>
+
+<div *ngIf="showChard">
+  <h3>{{answer}}</h3>
+</div>
+
+</body>

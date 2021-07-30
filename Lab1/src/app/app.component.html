@@ -1,0 +1,86 @@
+<div>
+  <div>
+    <label for="argsLen">Размерность матрицы </label>
+    <input id="argsLen" type="number" [(ngModel)]="argsLen" (change)="normaliseRowsToNewLen()"/><br>
+    <label for="epsilonInput">Эпсилон </label>
+    <input id="epsilonInput" type="number" [(ngModel)]="epsilonInput"/>
+  </div>
+  <div>
+    <form>
+      <table >
+        <tr *ngFor="let arg of args; let i = index">
+          <td *ngFor="let xArg of arg.xArgs; let j = index">
+            <span *ngIf="!(j == 0 )"> + </span>
+            <input id="X{{i+1}}{{j+1}}"  name="X{{i}}{{j}}" [(ngModel)]="args[i].xArgs[j]" maxlength="6" />
+            <label for="X{{i+1}}{{j+1}}">x{{j+1}} </label>
+
+          </td>
+          <td>
+            <label for="dInput{{i+1}}">= </label>
+            <input id="dInput{{i+1}}" type="number" name="dInput{{i}}" [(ngModel)]="args[i].dArg"/>
+          </td>
+        </tr>
+      </table>
+      <div>
+        <button (click)="submit()">Расчитать</button><br>
+        <label for="inputFile">Добавить значения из файла </label>
+        <input type="file" id="inputFile" (change)="load($event.target.files)" />
+      </div>
+    </form>
+  </div><br>
+  <div *ngIf="Error"><span>Ошибка! Проверка на сходимость не пройдена</span></div>
+  <div *ngIf="normalRow.length != 0">
+    <span>Отредактированая таблица</span>
+    <table>
+      <tr>
+        <td>#</td>
+        <td *ngFor="let row of normalRow; let i = index">
+          x{{i+1}}
+        </td>
+        <td>
+          d
+        </td>
+      </tr>
+      <tr *ngFor="let row of normalRow ; let i = index">
+        <td>
+          {{i}}
+        </td>
+        <td *ngFor="let x of row.xArgs">
+          {{x}}
+        </td>
+        <td>
+          {{row.dArg}}
+        </td>
+      </tr>
+    </table>
+  </div><br>
+  <div *ngIf="iterationRows.length != 0">
+    <span>Итерации</span>
+    <table>
+      <tr>
+        <td>#</td>
+        <td *ngFor="let x of iterationRows[0].XArray; let i = index">
+          x{{i+1}}
+        </td>
+        <td>
+          e
+        </td>
+      </tr>
+      <tr *ngFor="let row of iterationRows ; let i = index">
+        <td>
+          {{i}}
+        </td>
+        <td *ngFor="let x of row.XArray">
+          {{x}}
+        </td>
+        <td>
+          {{row.e}}
+        </td>
+      </tr>
+    </table>
+    <button (click)="save('txt')">Скачать файл с расчетами</button>
+  </div>
+</div>
+
+
+

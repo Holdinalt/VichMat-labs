@@ -1,0 +1,51 @@
+<body>
+
+<form>
+  <h3>Выбирите метод</h3>
+  <select size="2" [(ngModel)]="inputMethod" name="inputMethod">
+    <option selected [value]="0">Метод Эйлера</option>
+    <option [value]="1">Метод Милна</option>
+  </select><br>
+
+  <h3>Выбирите функцию</h3>
+  <select size="2" [(ngModel)]="inputFunc" name="inputFunc" (change)="changeFunc()" >
+    <option selected [value]="0">y' = y + (1 + x) * y^2</option>
+    <option [value]="1">x^2 - 2 * y</option>
+  </select><br>
+  <br>
+
+  <label for="inputA">Левая граница</label>
+  <input [(ngModel)]="inputA" id="inputA" name="inputA">
+  <label for="inputB"> правая граница</label>
+  <input [(ngModel)]="inputB" id="inputB" name="inputB"><br><br>
+  <label for="inputY0">Y0</label>
+  <input [(ngModel)]="inputY0" id="inputY0" name="inputY0"><br><br>
+  <label for="inputH">H</label>
+  <input [(ngModel)]="inputH" id="inputH" name="inputH"><br>
+
+
+</form>
+<br>
+<button (click)="execute()">Расчитать</button>
+<br><br><br>
+
+<div *ngIf="showChard">
+  <x-chartist
+    [type]="type"
+    [data]="data"
+    [options]="options"
+    [events]="events"
+  ></x-chartist>
+</div>
+
+<table *ngIf="showChard">
+  <tr>
+    <td *ngFor="let name of out[0]">{{name}}</td>
+  </tr>
+  <tr *ngFor="let i of out[1]">
+    <td>{{i}}</td>
+    <td>{{out[2][i] | number:'0.0-3'}}</td>
+    <td>{{out[3][i] | number:'0.0-3'}}</td>
+  </tr>
+</table>
+</body>

@@ -1,0 +1,58 @@
+<body>
+<div>
+  <label for="EqualSelect">Выбирите функцию</label><br>
+    <select size="3" id="EqualSelect" (change)="equalChange()" [(ngModel)]="equalNumber">
+      <option selected [value]="0"> 3 * x^3 + 5 * x^2 + x + 5; </option>
+      <option [value]="1"> x^2 </option>
+      <option [value]="2"> sin(x) </option>
+    </select><br>
+
+  <label for="MethodSelect">Выбирите метод решения</label><br>
+  <select size="3" id="MethodSelect" [(ngModel)]="methodNumber">
+    <option selected [value]="0"> Метод прямоугольников </option>
+    <option [value]="1"> Метод трапеций </option>
+    <option [value]="2"> Метод Симпсона </option>
+  </select><br>
+
+  <div *ngIf="methodNumber == '0'">
+    <label for="RectangleSelect">Выбирите модификацию прямоугольной функции</label><br>
+    <select size="3" id="RectangleSelect" [(ngModel)]="rectangleMethodNumber">
+      <option selected [value]="0"> Левая </option>
+      <option [value]="1"> Правая </option>
+      <option [value]="2"> Средняя </option>
+    </select>
+  </div><br>
+
+
+  <label for="limits">Введите пределы интегрирования</label>
+  <div id="limits">
+    <label for="a">a: </label><input id="a" [(ngModel)]="a"><span>
+    и
+    <label for="a">b: </label></span> <input id="b" [(ngModel)]="b">
+  </div><br>
+
+  <label for="E">Введите точность</label><br>
+  <input id="E" [(ngModel)]="E">
+
+
+
+</div>
+<br>
+<div>
+  <button (click)="execute()">Выполнить</button>
+</div>
+
+<div *ngIf="finalN != null">
+  <span>Результаты вычисления</span><br>
+  <span>Значение интеграла: {{finalResult}}</span><br>
+  <span>Количество разбиений: {{finalN}}</span><br>
+</div>
+
+<div *ngIf="Error == true">
+  <span>Функция принимает отрицательное значение в интервале</span>
+</div>
+
+<div *ngIf="finalN != null || Error == true">
+  <button (click)="clear()">Очистить</button>
+</div>
+</body>
